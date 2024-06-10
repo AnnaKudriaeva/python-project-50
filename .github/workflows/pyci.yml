@@ -12,7 +12,7 @@ jobs:
     - name: run pytest
       run: poetry run pytest
     - name: run lint
-      run: poetry run flake8 gendiff
+      run: poetry run ruff check gendiff
   coverage:
       needs: linter_and_test
       name: coverage
