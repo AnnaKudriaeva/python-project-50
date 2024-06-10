@@ -32,5 +32,5 @@ jobs:
         run: poetry run pytest --cov --cov-report xml
       - name: sending reporter
         env:
-          GITHUB_TOKEN: ${{ secrets.CC_TEST_REPORTER_ID }}
+          GITHUB_TOKEN: 4b9e40fd4e59d501521eca7e1f4d7dc1610d47bd4fdcca395398ca0e28f68b86
         run: ./cc-test-reporter after-build -r "$GITHUB_TOKEN"
