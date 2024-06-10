@@ -12,7 +12,7 @@ def format_stylish(diff, depth=0):
                 formatted_items.append(
                     f"{nested_nested_indent}{k}: {format_value(v, depth + 1)}"
                 )
-            formatted_items_str = '\n'.join(formatted_items)
+            formatted_items_str = "\n".join(formatted_items)
             return f"{{\n{formatted_items_str}\n{nested_current_indent}}}"
         elif value is None:
             return "null"
@@ -44,5 +44,5 @@ def format_stylish(diff, depth=0):
                 f"{current_indent}    {key}: {format_stylish(item['value'], depth + 1)}"
             )
 
-    lines = '\n'.join(lines)
+    lines = "\n".join(lines)
     return f"{{\n{lines}\n{current_indent}}}"
