@@ -28,7 +28,19 @@ jobs:
         uses: paambaati/codeclimate-action@v5.0.0
         if: github.ref_name == 'main'
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: ${{ secrets.4b9e40fd4e59d501521eca7e1f4d7dc1610d47bd4fdcca395398ca0e28f68b86 }}
         with:
           coverageCommand: make test-coverage
           debug: true
+        steps:
+          - uses: actions/checkout@v2
+          - name: Download Code Climate Test Reporter
+            run: |
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              chmod +x ./cc-test-reporter
+          - name: Code Climate Before Build
+            run: ./cc-test-reporter before-build
+          - name: Run Tests
+            run: npm test
+          - name: Code Climate After Build
+            run: ./cc-test-reporter after-build --exit-code $?
