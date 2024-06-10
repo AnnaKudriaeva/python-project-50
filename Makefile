@@ -9,7 +9,6 @@ test-coverage:
 
 lint:
 	poetry run ruff check gendiff
-	poetry run flake8 gendiff
 
 selfcheck:
 	poetry check
