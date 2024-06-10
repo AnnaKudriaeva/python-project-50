@@ -36,8 +36,20 @@ def test_format_stylish(file1_data_json, file2_data_json):
         expected_output = f.read().strip()
     assert format_stylish(diff).strip() == expected_output
 
+def test_format_stylish_yml(file1_data_yml, file2_data_yml):
+    diff = find_differences(file1_data_yml, file2_data_yml)
+    with open('tests/fixtures/expected_stylish.txt') as f:
+        expected_output = f.read().strip()
+    assert format_stylish(diff).strip() == expected_output
+
 def test_format_plain(file1_data_json, file2_data_json):
     diff = find_differences(file1_data_json, file2_data_json)
+    with open('tests/fixtures/expected_plain.txt') as f:
+        expected_output = f.read().strip()
+    assert '\n'.join(format_plain(diff)).strip() == expected_output
+
+def test_format_plain_yml(file1_data_yml, file2_data_yml):
+    diff = find_differences(file1_data_yml, file2_data_yml)
     with open('tests/fixtures/expected_plain.txt') as f:
         expected_output = f.read().strip()
     assert '\n'.join(format_plain(diff)).strip() == expected_output
