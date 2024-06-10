@@ -32,7 +32,7 @@ jobs:
         with:
           coverageCommand: make test-coverage
           debug: true
-#      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Download Code Climate Test Reporter
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
