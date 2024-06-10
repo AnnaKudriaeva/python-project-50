@@ -32,15 +32,14 @@ jobs:
         with:
           coverageCommand: make test-coverage
           debug: true
-        steps:
-          - uses: actions/checkout@v2
-          - name: Download Code Climate Test Reporter
-            run: |
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
-              chmod +x ./cc-test-reporter
-          - name: Code Climate Before Build
-            run: ./cc-test-reporter before-build
-          - name: Run Tests
-            run: poetry run pytest
-          - name: Code Climate After Build
-            run: ./cc-test-reporter after-build --exit-code $?
+      - uses: actions/checkout@v2
+      - name: Download Code Climate Test Reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+      - name: Code Climate Before Build
+        run: ./cc-test-reporter before-build
+      - name: Run Tests
+        run: poetry run pytest
+      - name: Code Climate After Build
+        run: ./cc-test-reporter after-build --exit-code $?
