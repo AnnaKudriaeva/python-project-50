@@ -12,7 +12,8 @@ def format_stylish(diff, depth=0):
                 formatted_items.append(
                     f"{nested_nested_indent}{k}: {format_value(v, depth + 1)}"
                 )
-            return f"{{\n{'\n'.join(formatted_items)}\n{nested_current_indent}}}"
+            formatted_items_str = '\n'.join(formatted_items)
+            return f"{{\n{formatted_items_str}\n{nested_current_indent}}}"
         elif value is None:
             return "null"
         elif isinstance(value, bool):
