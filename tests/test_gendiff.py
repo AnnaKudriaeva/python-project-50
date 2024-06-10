@@ -5,36 +5,31 @@ from gendiff.formatters.stylish import format_stylish
 from gendiff.formatters.plain import format_plain
 from gendiff.formatters.json import format_json
 from gendiff.gendiff import find_differences
-from gendiff.parser import parse_yaml
+from gendiff.parser import load_data
 
 @pytest.fixture
-def file1_data():
-    with open('tests/fixtures/file1.json') as f:
-        return json.load(f)
+def file1_data_json():
+    return load_data('tests/fixtures/file1.json')
 
 @pytest.fixture
-def file2_data():
-    with open('tests/fixtures/file2.json') as f:
-        return json.load(f)
+def file2_data_json():
+    return load_data('tests/fixtures/file2.json')
 
 @pytest.fixture
 def file1_data_yaml():
-    return parse_yaml('tests/fixtures/file1.yml')
+    return load_data('tests/fixtures/file1.yml')
 
 @pytest.fixture
 def file2_data_yaml():
-    return parse_yaml('tests/fixtures/file2.yml')
-
+    return load_data('tests/fixtures/file2.yml')
 
 def test_generate_diff_yaml(file1_data_yaml, file2_data_yaml):
     diff = generate_diff('tests/fixtures/file1.yml', 'tests/fixtures/file2.yml')
-    expected_diff = find_differences(file1_data_yaml, file2_data_yaml)
-    assert diff == expected_diff
+    assert diff == find_differences(file1_data_yaml, file2_data_yaml)
 
-
-def test_generate_diff(file1_data, file2_data):
+def test_generate_diff(file1_data_json, file2_data_json):
     diff = generate_diff('tests/fixtures/file1.json', 'tests/fixtures/file2.json')
-    assert diff == find_differences(file1_data, file2_data)
+    assert diff == find_differences(file1_data_json, file2_data_json)
 
 def test_format_stylish(file1_data, file2_data):
     diff = find_differences(file1_data, file2_data)

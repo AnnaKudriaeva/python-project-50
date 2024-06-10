@@ -1,10 +1,11 @@
+import json
 import yaml
 
-
-def parse_yaml(file_path):
-    try:
-        with open(file_path) as file:
-            return yaml.safe_load(file)
-    except Exception as e:
-        print(f"Error loading YAML file {file_path}: {e}")
-        return None
+def load_data(file_path):
+    with open(file_path) as f:
+        if file_path.endswith(('.yaml', '.yml')):
+            return yaml.safe_load(f)
+        elif file_path.endswith('.json'):
+            return json.load(f)
+        else:
+            raise ValueError("Unsupported file format")
