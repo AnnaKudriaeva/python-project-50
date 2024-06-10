@@ -1,44 +1,36 @@
-name: Python CI
-
-on:
-  - push
-  - pull_request
-
+name: run test and linter
+on: push
 jobs:
-  build:
+  linter_and_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.12.3]
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-        # make depends on poetry
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          make install
-      - name: Run linter and pytest
-        run: |
-          make check
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
-        if: github.ref_name == 'main'
-        env:
-          CC_TEST_REPORTER_ID: 4b9e40fd4e59d501521eca7e1f4d7dc1610d47bd4fdcca395398ca0e28f68b86 
-        with:
-          coverageCommand: make test-coverage
-          debug: true
-      - uses: actions/checkout@v2
-      - name: Download Code Climate Test Reporter
+    - uses: actions/checkout@v3
+    - name: install poetry
+      run: pip install poetry
+    - name: install dependencies
+      run: poetry install
+    - name: run pytest
+      run: poetry run pytest
+    - name: run lint
+      run: poetry run flake8 gendiff
+  coverage:
+      needs: linter_and_test
+      name: coverage
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: install poetry
+        run: pip install poetry
+      - name: install dependencies
+        run: poetry install
+      - name: create reporter
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
       - name: test
         run: poetry run pytest --cov --cov-report xml
-      - name: Code Climate After Build
-        run: ./cc-test-reporter after-build --exit-code $?
+      - name: sending reporter
+        env:
+          GITHUB_TOKEN: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: ./cc-test-reporter after-build -r "$GITHUB_TOKEN"
