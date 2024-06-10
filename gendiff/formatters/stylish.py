@@ -44,4 +44,5 @@ def format_stylish(diff, depth=0):
                 f"{current_indent}    {key}: {format_stylish(item['value'], depth + 1)}"
             )
 
-    return f"{{\n{'\n'.join(lines)}\n{current_indent}}}"
+    lines = '\n'.join(lines)
+    return f"{{\n{lines}\n{current_indent}}}"
