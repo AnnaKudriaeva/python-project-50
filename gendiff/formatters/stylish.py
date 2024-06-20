@@ -1,4 +1,4 @@
-def format_stylish(diff, depth=0):
+def format_stylish(diff, depth=0):  # noqa
     indent_size = 4
     current_indent = " " * (depth * indent_size)
     lines = []
