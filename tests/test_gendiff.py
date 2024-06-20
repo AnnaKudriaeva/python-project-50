@@ -23,12 +23,18 @@ def file2_data_yml():
     return load_data('tests/fixtures/file2.yml')
 
 def test_generate_diff_yaml(file1_data_yml, file2_data_yml):
-    diff = generate_diff(file1_data_yml, file2_data_yml)
-    assert diff == find_differences(file1_data_yml, file2_data_yml)
+    expected_diff = find_differences(file1_data_yml, file2_data_yml)
+    expected_formatted_diff = format_stylish(expected_diff)
+    actual_formatted_diff = generate_diff(file1_data_yml, file2_data_yml, format="stylish")
+    assert actual_formatted_diff == expected_formatted_diff
+
 
 def test_generate_diff(file1_data_json, file2_data_json):
-    diff = generate_diff(file1_data_json, file2_data_json)
-    assert diff == find_differences(file1_data_json, file2_data_json)
+    expected_diff = find_differences(file1_data_json, file2_data_json)
+    expected_formatted_diff = format_stylish(expected_diff)
+    actual_formatted_diff = generate_diff(file1_data_json, file2_data_json, format="stylish")
+    assert actual_formatted_diff == expected_formatted_diff
+
 
 def test_format_stylish(file1_data_json, file2_data_json):
     diff = find_differences(file1_data_json, file2_data_json)

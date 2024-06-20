@@ -1,10 +1,23 @@
+from gendiff.formatters import format_json, format_plain, format_stylish
 from gendiff.parser import load_data
 
 
-def generate_diff(file1_path, file2_path):
+def format_diff(diff, format_name):
+    if format_name == "stylish":
+        return format_stylish(diff)
+    elif format_name == "plain":
+        return "\n".join(format_plain(diff))
+    elif format_name == "json":
+        return format_json(diff)
+    else:
+        raise ValueError(f"Unknown format: {format_name}")
+
+
+def generate_diff(file1_path, file2_path, format="stylish"):
     file1_data = load_data(file1_path)
     file2_data = load_data(file2_path)
-    return find_differences(file1_data, file2_data)
+    diff = find_differences(file1_data, file2_data)
+    return format_diff(diff, format)
 
 
 def find_differences(data1, data2):
