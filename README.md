@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/bb4e44946b8eadb3df3a/maintainability)](https://codeclimate.com/github/AnnaKudriaeva/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bb4e44946b8eadb3df3a/test_coverage)](https://codeclimate.com/github/AnnaKudriaeva/python-project-50/test_coverage)
 
-An application for finding the difference in 2 files of json, yaml, yaml formats and displaying the result in several variants
+An application for finding the difference in two files of json, yaml, yml formats and displaying the result in several variants
 
 ## Installation
 1. Requires Python 3.12 or higher and Poetry
