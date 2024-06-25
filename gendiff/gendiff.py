@@ -22,7 +22,8 @@ def generate_diff(file1_path, file2_path, format="stylish"):
 
 def find_differences(data1, data2):
     diff = {}
-    keys = set(data1.keys()) | set(data2.keys())
+
+    keys = set(data1.keys()).union(set(data2.keys()))
 
     for key in keys:
         value1 = data1.get(key)
@@ -34,9 +35,10 @@ def find_differences(data1, data2):
             diff[key] = {"type": "added", "value": value2}
         elif key not in data2:
             diff[key] = {"type": "removed", "value": value1}
-        elif isinstance(value1, dict) and isinstance(value2, dict):
-            diff[key] = {"type": "nested", "value": find_differences(value1, value2)}
         else:
-            diff[key] = {"type": "changed", "value": (value1, value2)}
+            if isinstance(value1, dict) and isinstance(value2, dict):
+                diff[key] = {"type": "nested", "value": find_differences(value1, value2)}
+            else:
+                diff[key] = {"type": "changed", "value": (value1, value2)}
 
     return diff
